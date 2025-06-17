@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cervejaria Biesdorf - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<!-- Tela de Login -->
+<div id="login-screen" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000;">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="img/logo.jpg" class="logo" style="margin-bottom: 20px;">
+        <div class="login-container">
+            <dotlottie-player src="https://lottie.host/4dd1c30f-3346-4d65-831f-c76f63bffd54/Y6OKq41yOR.lottie" background="transparent" speed="1" style="width: 300px; height: 300px; margin-bottom: 25px;" loop autoplay></dotlottie-player>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username" style="color: white;">Usuário (admin):</label>
+                    <input type="text" id="username" name="username" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="color: white;">Senha (12345678):</label>
+                    <input type="password" id="password" name="password" class="input-field">
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+            </form>
+            <div id="error-message" class="error-text" style="color: red; margin-top: 1rem;"></div>
+        </div>
+    </div>
+</div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" style="display: none;">
+        <div class="sidebar">
+            <div class="logo-container">
+                <img src="img/logo.jpg" class="logo" style="min-height: 50px; min-width: 200px;">
+            </div>
+            
+            <nav class="main-menu" id = "mainMenu">
+                <ul>
+                    <li class="active"><a href="index.html"><i class="fas fa-home" style="margin-right: 10px;"></i> Home</a></li>
+                    <li><a href="pedidos.html"><i class="fas fa-clipboard-list" style="margin-right: 10px;"></i> Pedidos</a></li>
+                    <li><a href="clientes.html"><i class="fas fa-users" style="margin-right: 10px;"></i> Clientes</a></li>
+                    <li><a href="cervejas.html"><i class="fas fa-beer" style="margin-right: 10px;"></i> Cervejas</a></li>
+                    <li><a href="relatorios.html"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Usuário</span>
+                    <a href="#" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <div class="sidebar-overlay"></div>
+                <h1><i class="fas fa-home"></i> Painel de Controle </h1> 
+                <!-- >div class="search-box">
+                    <input type="text" placeholder="Pesquisa (Sem função)">
+                    <button><i class="fas fa-search"></i></button>
+                </div> -->
+            </header>
+            <div class="content-area">
+                <section id="home" class="tab-content active">
+                    <div class="stats-cards">
+                        <!--  <div class="stat-card"><h3>Pedidos Hoje</h3><p class="stat-value"> 0 </p></div>
+                        <div class="stat-card"><h3>Vendas nos Últimos 7 Dias</h3><p class="stat-value stat-vendas-semana"> R$ 0,00 </p></div>
+                        <div class="stat-card"><h3>Ticket Médio</h3><p class="stat-value stat-ticket-medio"> R$ 0,00 </p></div> -->
+                    </div>
+                    <div class="pedidos-ativos">
+                        <h2><i class="fas fa-clipboard-list"></i> Pedidos Ativos <a href="pedidos.html" class="btn btn-primary">Novo</a> </h2>
+                        
+                        <div class="table-container">
+                            <table class="pedidos-ativos">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Produtos</th>
+                                        <th>Qtd (L) </th>
+                                        <th> Valor (R$) </th>
+                                        <th> Entrega </th>
+                                        <th> Endereço </th>
+                                        <th>Códigos</th>
+                                        <th> OBS </th>
+                                        <th>Status</th>
+                                        <th>Pagamento</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <!-- Pedidos filtrados pelo ativos.js -->
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </section>
+                
+            </div>
+                        <div class="stats-cards">
+                            <div class="stat-card"><h3>Pedidos Hoje</h3><p class="stat-value"> 0 </p></div>
+                            <div class="stat-card"><h3>Vendas nos Últimos 7 Dias</h3><p class="stat-value stat-vendas-semana"> R$ 0,00 </p></div>
+                            <div class="stat-card"><h3>Ticket Médio</h3><p class="stat-value stat-ticket-medio"> R$ 0,00 </p></div>
+                        </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+    <script src ="js/pedidos.js"></script>
+    <script src ="js/ativos.js"></script>
+    <script src ="js/indicadoresHome.js"></script>
+    <script src ="js/general.js"></script>
+    
+</body>
+</html>
