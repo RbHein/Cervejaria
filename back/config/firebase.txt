@@ -1,0 +1,3 @@
+Arquivos de Autenticação do Banco Firebase
+firebase.js
+firebase.json
