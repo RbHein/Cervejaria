@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cervejaria Biesdorf - Pedidos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="dashboard">
+    <div class="sidebar">
+      <div class="logo-container">
+        <img
+          src="img/logo.jpg"
+          class="logo"
+          style="min-height: 50px; min-width: 200px;"
+        />
+      </div>
+      <nav class="main-menu">
+        <ul>
+          <li> <a href="index.html"><i class="fas fa-home" style="margin-right: 10px;"></i> Home</a> </li>
+          <li class="active"> <a href="pedidos.html"><i class="fas fa-clipboard-list" style="margin-right: 10px;"></i> Pedidos</a></li>
+          <li> <a href="clientes.html"><i class="fas fa-users" style="margin-right: 10px;"></i> Clientes</a> </li>
+          <li> <a href="cervejas.html"><i class="fas fa-beer" style="margin-right: 10px;"></i> Cervejas</a> </li>
+          <li> <a href="relatorios.html" ><i class="fas fa-chart-bar" style="margin-right: 10px;"></i> Relatórios</a> </li> 
+        </ul>
+      </nav>
+      <div class="user-profile">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name">Usuário</span>
+          <a href="index.html" class="logout"
+            ><i class="fas fa-sign-out-alt"></i> Sair</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <h1>
+          <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+          <i class="fas fa-clipboard-list"></i> Cadastro de Pedidos
+        </h1>
+      </header>
+
+      <div class="content-area">
+        <div class="form-group">
+          <div>
+            <div class="buscar-cliente-container">
+              <a href="clientes.html" class="btn btn-primary"
+                >Cadastrar Novo Cliente</a
+              >
+            </div>
+
+            <input
+              type="text"
+              id="busca-cliente"
+              placeholder="Buscar Cliente"
+              autocomplete="off"
+              required
+            />
+            <ul id="sugestoes-clientes" class="autocomplete-list"></ul>
+          </div>
+        </div>
+
+        <!-- Exibir endereço cadastrado após seleção -->
+        <div
+          id="endereco-cadastrado-info"
+          class="info-box"
+          style="margin-top: -10px; margin-bottom: 20px; font-style: italic; color: #555;"
+        >
+          <!-- Preenchido via JS ao selecionar o cliente -->
+        </div>
+
+        <h2>Itens do Pedido</h2>
+        <form id="item-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo-cerveja">Tipo de Cerveja</label>
+              <select id="tipo-cerveja" required>
+                <option value="">Selecione...</option>
+                <option value="pilsen">Pilsen</option>
+                <option value="ipa">IPA</option>
+                <option value="viena">Viena</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="embalagem">Embalagem</label>
+              <select id="embalagem" required onchange="atualizarQuantidade()">
+                <option value="">Selecione...</option>
+                <option value="barril">Barril</option>
+                <option value="PET">PET</option>
+              </select>
+            </div>
+            <div class="form-group" id="quantidade-container">
+              <label for="quantidade">Quantidade (L)</label>
+              <input type="number" id="quantidade" name="quantidade" min="1" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="valor-unitario">Preço por Litro (R$ / L)</label>
+              <input
+                type="number"
+                id="valor-unitario"
+                step="1.00"
+                min="0"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="codigo">Código Barril / Chopeira</label>
+              <input type="text" id="codigo" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              style="margin-bottom: 10px;"
+              type="button"
+              class="btn-primary"
+              onclick="adicionarItem()"
+            >
+              Adicionar ao Pedido
+            </button>
+          </div>
+        </form>
+
+        <h2 style="margin-bottom: 10px;">Resumo</h2>
+        <div class="carrinho-itens">
+          <table>
+            <thead>
+              <tr>
+                <th>Cerveja</th>
+                <th>Embalagem</th>
+                <th>Qtd</th>
+                <th>Valor R$</th>
+                <th>Código</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+
+            <tbody id="lista-itens">
+              <!-- Itens adicionados via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <br />
+
+        <form id="pedido-final" class="pedidos-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo-entrega">Tipo de Entrega:</label>
+              <select id="tipo-entrega" onchange="verificarEntrega()">
+                <option value="">-- Selecione --</option>
+                <option value="retirada">Retirada</option>
+                <option value="entregar">Entregar</option>
+              </select>
+            </div>
+
+            <div
+              class="form-group"
+              id="opcao-endereco"
+              style="display: none;"
+            >
+              <label for="endereco-select">Endereço para entrega:</label>
+              <select id="endereco-select" onchange="alternarEndereco()">
+                <option value="endereco-cadastrado">Endereço cadastrado</option>
+                <option value="novo-endereco">Informar novo endereço</option>
+              </select>
+            </div>
+
+            <div
+              id="novo-endereco"
+              class="form-group"
+              style="display: none;"
+            >
+              <label for="novo-endereco-input">Novo Endereço:</label>
+              <input type="text" id="novo-endereco-input" placeholder="..." />
+            </div>
+
+            <div class="form-group">
+              <label for="data-entrega">Data de Entrega</label>
+              <input type="date" id="data-entrega" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pagamento">Pagamento</label>
+            <select id="pagamento" required>
+              <option value="">Selecione...</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Pago">Pago</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea
+              id="observacoes"
+              placeholder="Escreva algo relevante..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Cadastrar Pedido</button>
+            <button type="reset" class="btn-secondary">Limpar</button>
+          </div>
+        </form>
+
+        <br />
+
+        <div class="cervejas-list">
+          <div
+            class="header-pedidos"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 1rem;
+              flex-wrap: wrap;
+            "
+          >
+            <h3 style="margin: 0;">
+              <i class="fas fa-list"></i> Histórico de Pedidos
+            </h3>
+            <div class="search-box">
+              <input
+                type="text"
+                id="pesquisaPedidos"
+                placeholder="Pesquisar pedidos..."
+                style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;"
+              />
+              <button style="padding: 5px 10px;">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="cervejas-list">
+              <thead>
+                <tr>
+                  <th>Data Entrega</th>
+                  <th>Cliente</th>
+                  <th>Produtos</th>
+                  <th>Qtd (L)</th>
+                  <th>Valor (R$)</th>
+                  <th>Entrega</th>
+                  <th>Endereço</th>
+                  <th>Códigos</th>
+                  <th>OBS</th>
+                  <th>Status</th>
+                  <th>Pagamento</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Conteúdo gerado pelo JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="height: 400px;"></div>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/pedidos.js"></script>
+    <script src="js/general.js"></script>
+    <script src ="js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+    ></script>
+  </body>
+</html>
